@@ -16,6 +16,7 @@ from urllib3.exceptions import (
     ProtocolError,
     SSLError,
 )
+from dummyserver.server import DEFAULT_CA
 
 from socket import error as SocketError
 from ssl import SSLError as BaseSSLError
@@ -230,7 +231,7 @@ class TestConnectionPool(unittest.TestCase):
                 c._absolute_url('path?query=foo'))
 
     def test_ca_certs_default_cert_required(self):
-        with connection_from_url('https://google.com:80', ca_certs='/etc/ssl/certs/custom.pem') as pool:
+        with connection_from_url('https://google.com:80', ca_certs=DEFAULT_CA) as pool:
             conn = pool._get_conn()
             self.assertEqual(conn.cert_reqs, 'CERT_REQUIRED')
 
