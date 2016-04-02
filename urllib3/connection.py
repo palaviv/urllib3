@@ -233,6 +233,9 @@ class VerifiedHTTPSConnection(HTTPSConnection):
         if ca_certs is not None:
             self.ssl_context.load_verify_locations(ca_certs)
 
+        if ca_cert_dir is not None:
+            self.ssl_context.load_verify_locations(capath=ca_cert_dir)
+
     def connect(self):
         # Add certificate verification
         conn = self._new_conn()
