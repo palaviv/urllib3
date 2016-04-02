@@ -111,6 +111,17 @@ except ImportError:
             self.ciphers = cipher_suite
 
         def wrap_socket(self, socket, server_hostname=None):
+            if not server_hostname:
+                warnings.warn(
+                    'An HTTPS request has been made, but the SNI (Subject Name '
+                    'Indication) extension to TLS is not available on this platform. '
+                    'This may cause the server to present an incorrect TLS '
+                    'certificate, which can cause validation failures. For more '
+                    'information, see '
+                    'https://urllib3.readthedocs.org/en/latest/security.html'
+                    '#snimissingwarning.',
+                    SNIMissingWarning
+                )
             warnings.warn(
                 'A true SSLContext object is not available. This prevents '
                 'urllib3 from configuring SSL appropriately and may cause '
